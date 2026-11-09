@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Metrics</title>
+    <style>
+        body { margin: 0; padding: 4px; font-family: Arial, sans-serif; background: transparent; overflow: hidden; }
+    </style>
+</head>
+<body>
+    <div style="border: 1px solid #e1e4e8; border-radius: 8px; padding: 10px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin: 0;">
+        <h3 style="margin: 0 0 8px 0; color: #0366d6; border-bottom: 2px solid #eaecef; padding-bottom: 6px; font-size: 15px;">Author Metrics</h3>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; text-align: center; margin: 6px 0;">
+            <div style="background: #f6f8fa; padding: 6px; border-radius: 6px;">
+                <div style="font-size: 15px; font-weight: bold; color: #24292e;" id="p-works">-</div>
+                <div style="font-size: 7px; color: #586069; margin-top: 2px; text-transform: uppercase; font-weight: bold;">Publications</div>
+            </div>
+            <div style="background: #f6f8fa; padding: 6px; border-radius: 6px;">
+                <div style="font-size: 15px; font-weight: bold; color: #24292e;" id="p-citations">-</div>
+                <div style="font-size: 7px; color: #586069; margin-top: 2px; text-transform: uppercase; font-weight: bold;">Total Citations</div>
+            </div>
+            <div style="background: #f6f8fa; padding: 6px; border-radius: 6px;">
+                <div style="font-size: 15px; font-weight: bold; color: #24292e;" id="p-hindex">-</div>
+                <div style="font-size: 7px; color: #586069; margin-top: 2px; text-transform: uppercase; font-weight: bold;">H-Index</div>
+            </div>
+            <div style="background: #f6f8fa; padding: 6px; border-radius: 6px;">
+                <div style="font-size: 15px; font-weight: bold; color: #24292e;" id="p-i10index">-</div>
+                <div style="font-size: 7px; color: #586069; margin-top: 2px; text-transform: uppercase; font-weight: bold;">i10-Index</div>
+            </div>
+        </div>
+        <div style="font-size: 8px; color: #6a737d; text-align: right;" id="p-updated">Last updated: Loading...</div>
+    </div>
+
+    <script>
+    (function() {
+        fetch('personal-metrics.json?v=' + new Date().getTime())
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('p-works').textContent = data.total_works;
+                document.getElementById('p-citations').textContent = data.total_citations;
+                document.getElementById('p-hindex').textContent = data.h_index;
+                document.getElementById('p-i10index').textContent = data.i10_index;
+                document.getElementById('p-updated').textContent = 'Last updated: ' + data.last_updated;
+            })
+            .catch(err => console.error(err));
+    })();
+    </script>
+</body>
+</html>
